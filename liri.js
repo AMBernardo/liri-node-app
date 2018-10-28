@@ -91,16 +91,25 @@ function movieThis(){
 
 function saysThis() {
     fs.readFile("random.txt", "utf8", function(error, data){
-        if (!error) {
-            var saysThisResults = data.split(",");
-            // saysThisResults[0] = process.argv[2];
-            // saysThisResults[1] = process.argv[3];
+        if (error) {
 
-            console.log(saysThisResults);
-            
-            
-        } else {
             console.log("Error occurred" + error);
+                      
+        } else {
+            
+            var saysThisArr = data.split(",");
+            command_arg = saysThisArr[0]; 
+            process.argv[3] = saysThisArr[1];
+
+            if (command_arg === "spotify-this-song") {
+                spotifyThis(process.argv[3]);
+            }else if(command_arg === "movie-this"){
+                movieThis(process.argv[3]);
+            }else if(command_arg === "concert-this"){
+                concertThis(process.argv[3]);
+            }else{
+                console.log ("There's no command inside the file random.txt");
+            }
         }
     });
 };
